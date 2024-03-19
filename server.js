@@ -22,7 +22,6 @@ mongoose.connect(process.env.MONGOURL, {
 .catch((error) => {
   console.error('Error connecting to MongoDB:', error);
 });
-
 app.use('/',authentication)
 app.use('/api', route);
 

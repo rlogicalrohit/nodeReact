@@ -7,7 +7,7 @@ const createProductSchema = Joi.object({
     category: Joi.string().required(),
     itemWeight: Joi.string().required(),
     description: Joi.string().required(),
-    color: Joi.array()
+    color: Joi.string()
 });
 
 const updateProductSchema = Joi.object({
@@ -18,7 +18,7 @@ const updateProductSchema = Joi.object({
     category: Joi.string().required(),
     itemWeight: Joi.string().required(),
     description: Joi.string().required(),
-    color: Joi.array()
+    color: Joi.string()
 
 });
 

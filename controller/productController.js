@@ -2,7 +2,7 @@ const Product = require("../model/productModel.js");
 const { createProductSchema, updateProductSchema } = require("../validation/index.js");
 
 module.exports.createProduct = async (req, res) => {
-
+    
     const { error } = createProductSchema.validate(req.body);
     if (error) {
         return res.status(400).json({ message: error.details[0].message });
@@ -64,7 +64,7 @@ module.exports.deleteProductById = async (req, res) => {
 
 module.exports.updateProductById = async (req, res) => {
     try {
-        const { error } = updateProductSchema.validate(req.body);
+                const { error } = updateProductSchema.validate(req.body);
         if (error) {
             return res.status(400).json({ message: error.details[0].message });
         }
