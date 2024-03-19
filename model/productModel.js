@@ -25,6 +25,9 @@ const productSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    color: {
+        type: Array
+    }
 },
     {
         timestamps: true // This option adds createdAt and updatedAt fields automatically

@@ -7,7 +7,7 @@ module.exports.createProduct = async (req, res) => {
     if (error) {
         return res.status(400).json({ message: error.details[0].message });
     }
-    const { name, price, brand, category, itemWeight, description } = req.body
+    const { name, price, brand, category, itemWeight, description, color } = req.body
     console.log("req.body", req.body);
     const productData = new Product({
         name,
@@ -15,7 +15,8 @@ module.exports.createProduct = async (req, res) => {
         brand,
         category,
         itemWeight,
-        description
+        description,
+        color
     })
 
     try {
