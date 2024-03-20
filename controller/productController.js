@@ -1,6 +1,6 @@
 const Product = require("../model/productModel.js");
 const { createProductSchema, updateProductSchema } = require("../validation/index.js");
-
+const fs = require('fs');
 module.exports.createProduct = async (req, res) => {
     console.log("req.filereq.file", req.file);
     const { error } = createProductSchema.validate(req.body);
@@ -17,7 +17,7 @@ module.exports.createProduct = async (req, res) => {
         itemWeight,
         description,
         color,
-        image: req.file.path
+        image: req.file ? req.file.filename : null
     })
 
     try {
@@ -57,6 +57,15 @@ module.exports.deleteProductById = async (req, res) => {
     try {
         const fetchProduct = await Product.findByIdAndDelete({ _id: req.params.id });
         console.log("fetchUser FETCHED", fetchProduct)
+        fs.unlinkSync(`public/storage/${fetchProduct.image}`, (err) => {
+            if (err) {
+                console.error(err);
+                return;
+            }
+            console.log('File deleted successfully');
+        });
+        // console.log("DIR NAME IMAGE",path.join(__dirname, ``));
+        // fs.unlinkSync(path.join(__dirname, `../public/uploads/${fetchProduct.image}`));
         return res.status(200).json(fetchProduct);
     } catch (error) {
         return res.status(500).json(error);

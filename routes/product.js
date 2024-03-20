@@ -4,6 +4,7 @@ const { auth } = require("../controller/authentication.js");
 const route = express.Router();
 const multer = require('multer');
 const fs = require('fs');
+const path = require("path");
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -17,7 +18,8 @@ const storage = multer.diskStorage({
     },
     filename: function (req, file, cb) {
         // Use the original file name as the name of the stored file
-        cb(null, file.originalname);
+        // cb((null, file.originalname);
+        cb(null, Date.now() + path.extname(file.originalname)); 
     }
 });
 
