@@ -57,13 +57,15 @@ module.exports.deleteProductById = async (req, res) => {
     try {
         const fetchProduct = await Product.findByIdAndDelete({ _id: req.params.id });
         console.log("fetchUser FETCHED", fetchProduct)
-        fs.unlinkSync(`public/storage/${fetchProduct.image}`, (err) => {
-            if (err) {
-                console.error(err);
-                return;
-            }
-            console.log('File deleted successfully');
-        });
+        if (fetchProduct.image) {
+            fs.unlinkSync(`public/storage/${fetchProduct.image}`, (err) => {
+                if (err) {
+                    console.error(err);
+                    return;
+                }
+                console.log('File deleted successfully');
+            });
+        }
         // console.log("DIR NAME IMAGE",path.join(__dirname, ``));
         // fs.unlinkSync(path.join(__dirname, `../public/uploads/${fetchProduct.image}`));
         return res.status(200).json(fetchProduct);
@@ -80,11 +82,16 @@ module.exports.updateProductById = async (req, res) => {
         }
         const fetchAllProducts = await Product.find();
         const productValidation = fetchAllProducts.filter((product) => (product.name.toLowerCase() === req.body.name.toLowerCase() && product._id.toString() !== req.params.id))
-        console.log("emailValidation===>", productValidation);
-        console.log("req.params.id===>", req.params.id);
         if (productValidation.length > 0) return res.status(403).json({ message: "Product already Exists" });
-        const fetchProduct = await Product.findByIdAndUpdate({ _id: req.params.id }, req.body);
-        // console.log("fetchUser FETCHED",fetchUser)
+        if (req.file) {
+            req.body.image = req.file.filename
+        }
+        else {
+            req.body.image = null
+        }
+        const fetchProduct = await Product.findByIdAndUpdate({ _id: req.params.id }, req.body, { new: true });
+
+        console.log("fetchProduct FETCHED", fetchProduct)
         return res.status(200).json(fetchProduct);
     } catch (error) {
         return res.status(500).json(error);
