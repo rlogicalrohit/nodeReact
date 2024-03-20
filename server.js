@@ -10,6 +10,7 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 app.use(morgan('dev'));
+app.use(express.static('public'));
 
 // Connect to MongoDB
 mongoose.connect(process.env.MONGOURL, {

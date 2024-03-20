@@ -8,7 +8,7 @@ const fs = require('fs');
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
         // Define the destination folder where files will be stored
-        const destinationFolder = 'storage/';
+        const destinationFolder = 'public/storage/';
         // Check if the destination folder exists, if not create it
         if (!fs.existsSync(destinationFolder)) {
             fs.mkdirSync(destinationFolder, { recursive: true });
@@ -38,7 +38,7 @@ function handleUploadErrors(err, req, res, next) {
 route.post("/create", auth, upload.single('image'), handleUploadErrors, create.createProduct);
 route.get("/fetchAll", auth, create.fetchAllProducts);
 route.get("/fetch/:id", auth, create.fetchProductByid);
-route.put("/update/:id", auth,  upload.single('image'), handleUploadErrors,create.updateProductById);
+route.put("/update/:id", auth, upload.single('image'), handleUploadErrors, create.updateProductById);
 route.delete("/delete/:id", auth, create.deleteProductById);
 
 module.exports = route;
