@@ -1,8 +1,9 @@
 process.loadEnvFile();
-const  express  = require("express");
+const express = require("express");
 const authentication = require("./routes/user.js");
-const mongoose  = require('mongoose');
-const route = require("./routes/product.js");
+const mongoose = require('mongoose');
+const productsRoute = require("./routes/product.js");
+const rolesRoutes = require("./routes/roles.js");
 const cors = require('cors');
 const morgan = require('morgan');
 // Create an Express application
@@ -15,16 +16,17 @@ app.use(express.static('public'));
 // Connect to MongoDB
 mongoose.connect(process.env.MONGOURL, {
   useNewUrlParser: true,
-  useUnifiedTopology: true
+  useUnifiedTopology: true,
 })
-.then(() => {
-  console.log('Connected to MongoDB');
-})
-.catch((error) => {
-  console.error('Error connecting to MongoDB:', error);
-});
-app.use('/',authentication)
-app.use('/api', route);
+  .then(() => {
+    console.log('Connected to MongoDB');
+  })
+  .catch((error) => {
+    console.error('Error connecting to MongoDB:', error);
+  });
+app.use('/', authentication)
+app.use('/api', productsRoute);
+app.use('/roles', rolesRoutes);
 
 // Start the server on port 3000
 const PORT = process.env.PORT || 4000;
