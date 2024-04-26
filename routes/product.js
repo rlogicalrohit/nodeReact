@@ -1,7 +1,7 @@
 const express = require("express");
 const create = require("../controller/productController.js");
 const { auth } = require("../controller/authentication.js");
-const   route = express.Router();
+const route = express.Router();
 const multer = require('multer');
 const fs = require('fs');
 const path = require("path");
@@ -43,4 +43,4 @@ route.get("/fetch/:id", auth, create.fetchProductByid);
 route.put("/update/:id", auth, upload.single('image'), handleUploadErrors, create.updateProductById);
 route.delete("/delete/:id", auth, create.deleteProductById);
 
-module.exports = route;
+module.exports = route; 

@@ -52,12 +52,11 @@ module.exports.loginUser = async (req, res) => {
     const { email, password } = req.body
     const fetchUser = await User.find({ email: email });
 
-    
-   const fetchRole = await Role.findOne({ name: fetchUser[0].role });
 
-    if (!fetchRole) return res.status(403).json({ message: "Email and Password are Incorrect" });
+    // const fetchRole = await Role.findOne({ name: fetchUser[0].role });
 
-    
+    // if (!fetchRole) return res.status(403).json({ message: "Email and Password are Incorrect" });
+
 
     if (!fetchUser.length) return res.status(403).json({ message: "Email and Password are Incorrect" });
     // const match = await bcrypt.compare(password, fetchUser[0].password);
@@ -66,9 +65,5 @@ module.exports.loginUser = async (req, res) => {
 
     const token = jwt.sign({ user: fetchUser[0] }, jwtSecret, { expiresIn: '1h' });
 
-    const payload = {
-        permission: fetchRole.permission,
-        token: token
-    }
-    return res.status(200).json({ payload });
+    return res.status(200).json({ token });
 }
