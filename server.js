@@ -33,6 +33,9 @@ app.use('/', authentication)
 app.use('/payment', paymentRoutes)
 app.use('/api', productsRoute);
 app.use('/roles', rolesRoutes);
+app.get('/check', (req, res) => {
+  res.send('Server is up and running')
+})
 app.post('/hooks', bodyParser.raw({ type: 'application/json' }), async (req, res) => {
   console.log("webhookHandler FUNCTION TRIGGERED");
 
