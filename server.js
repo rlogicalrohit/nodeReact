@@ -1,4 +1,4 @@
-process.loadEnvFile();
+// process.loadEnvFile();
 const express = require("express");
 const mongoose = require('mongoose');
 const cors = require('cors');
@@ -18,7 +18,7 @@ app.use(morgan('dev'));
 app.use(express.static('public'));
 app.use(bodyParser.raw({ type: 'application/json' }));
 // Connect to MongoDB
-mongoose.connect(process.env.MONGOURL, {
+mongoose.connect("mongodb://localhost:27017/reactnode", {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 })
